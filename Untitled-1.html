@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FrameHouse — Каркасно-панельные дома премиум-класса</title>
+<style>
+  :root {
+    --bg: #0f0f0e;
+    --bg-soft: #1a1a18;
+    --text: #f5f3ef;
+    --text-muted: #9a9689;
+    --accent: #c9a87c;
+    --accent-hover: #e0c09a;
+    --border: rgba(245, 243, 239, 0.08);
+    --radius: 18px;
+    --max-w: 1280px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Typography */
+  h1, h2, h3 { font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; }
+  h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+  h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+  h3 { font-size: 1.5rem; }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(15, 15, 14, 0.7);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-cta {
+    padding: 10px 22px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .nav-cta:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+  .burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .burger span { width: 24px; height: 2px; background: var(--text); transition: 0.3s; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/148844efe-f99a-48a7-9d87-e6d76bb0a228.png') center/cover;
+    opacity: 0.4;
+    filter: grayscale(20%);
+    z-index: 0;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15,15,14,0.4) 0%, rgba(15,15,14,0.95) 100%);
+  }
+
+  .hero-content {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: rgba(201, 168, 124, 0.1);
+    border: 1px solid rgba(201, 168, 124, 0.3);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    max-width: 900px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-sub {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+
+  /* Sections */
+  section {
+    padding: 120px 40px;
+    position: relative;
+  }
+
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 80px;
+    max-width: 700px;
+  }
+
+  .section-label {
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+
+  /* About / Tech */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .tech-img {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+
+  .tech-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s;
+  }
+
+  .tech-img:hover img { transform: scale(1.05); }
+
+  .tech-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(15,15,14,0.6));
+    z-index: 1;
+  }
+
+  .tech-badge {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    z-index: 2;
+    background: rgba(15,15,14,0.8);
+    backdrop-filter: blur(10px);
+    padding: 16px 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .tech-badge-num { font-size: 1.6rem; color: var(--accent); font-weight: 500; }
+  .tech-badge-text { font-size: 0.85rem; color: var(--text-muted); }
+
+  .tech-list {
+    list-style: none;
+    margin-top: 40px;
+  }
+
+  .tech-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .tech-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .tech-list strong {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .tech-list span { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* Advantages */
+  .advantages {
+    background: var(--bg-soft);
+  }
+
+  .adv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .adv-card {
+    background: var(--bg);
+    padding: 40px 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .adv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .adv-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201, 168, 124, 0.3);
+  }
+
+  .adv-card:hover::before { opacity: 1; }
+
+  .adv-icon {
+    width: 52px; height: 52px;
+    background: rgba(201, 168, 124, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 1.6rem;
+  }
+
+  .adv-card h3 { margin-bottom: 12px; }
+  .adv-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
+    gap: 20px;
+  }
+
+  .project {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .project img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s;
+  }
+
+  .project:hover img { transform: scale(1.08); }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(15,15,14,0.95));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    transition: all 0.4s;
+  }
+
+  .project:hover .project-overlay {
+    background: linear-gradient(180deg, transparent 20%, rgba(15,15,14,0.98));
+  }
+
+  .project-tag {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .project-meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  .project:nth-child(1) { grid-row: span 2; }
+
+  /* Steps */
+  .steps {
+    background: var(--bg-soft);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    counter-reset: step;
+  }
+
+  .step {
+    padding: 32px 28px;
+    border-radius: var(--radius);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    position: relative;
+    counter-increment: step;
+  }
+
+  .step::before {
+    content: '0' counter(step);
+    position: absolute;
+    top: 20px; right: 24px;
+    font-size: 2.5rem;
+    color: var(--accent);
+    opacity: 0.3;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .step-num {
+    width: 40px; height: 40px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .step h3 { margin-bottom: 12px; font-size: 1.2rem; }
+  .step p { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* CTA / Contact */
+  .contact {
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-soft) 100%);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-info h2 { margin-bottom: 24px; }
+  .contact-info p { color: var(--text-muted); margin-bottom: 40px; }
+
+  .contact-methods {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .contact-methods li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: all 0.3s;
+  }
+
+  .contact-methods li:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(201, 168, 124, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-methods strong { display: block; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
+  .contact-methods span { font-size: 1.05rem; }
+
+  .form {
+    background: var(--bg);
+    padding: 48px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+
+  .form h3 { margin-bottom: 28px; font-size: 1.6rem; }
+
+  .form-group { margin-bottom: 20px; }
+
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+  }
+
+  .form-submit:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+  .form-note {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 16px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 60px 40px 30px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-grid {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 50px;
+  }
+
+  .footer-brand p { color: var(--text-muted); margin-top: 16px; font-size: 0.9rem; max-width: 320px; }
+
+  .footer-col h4 {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  .footer-col a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .tech-grid, .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+    .adv-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .project:nth-child(1) { grid-row: auto; grid-column: span 2; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 640px) {
+    header, section, footer { padding-left: 20px; padding-right: 20px; }
+    nav ul { display: none; }
+    .burger { display: flex; }
+    .adv-grid, .steps-grid, .projects-grid { grid-template-columns: 1fr; }
+    .project:nth-child(1) { grid-column: auto; }
+    .hero-stats { grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 60px; }
+    .form { padding: 28px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    section { padding: 80px 20px; }
+    .hero { padding: 100px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <div class="logo"><span class="logo-dot"></span>FrameHouse</div>
+    <nav>
+      <ul>
+        <li><a href="#about">О технологии</a></li>
+        <li><a href="#advantages">Преимущества</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#steps">Этапы</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="nav-cta">Заказать проект</a>
+    <div class="burger"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Каркасно-панельная технология нового поколения</div>
+    <h1>Современные дома, <span>созданные</span> для жизни</h1>
+    <p class="hero-sub">Проектируем и строим энергоэффективные каркасно-панельные дома премиум-класса. От идеи до ключей — за 90 дней.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">Смотреть проекты →</a>
+      <a href="#contact" class="btn btn-ghost">Получить консультацию</a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">лет на рынке</div>
+      </div>
+      <div>
+        <div class="stat-num">480</div>
+        <div class="stat-label">построенных домов</div>
+      </div>
+      <div>
+        <div class="stat-num">90</div>
+        <div class="stat-label">дней до сдачи</div>
+      </div>
+      <div>
+        <div class="stat-num">25</div>
+        <div class="stat-label">лет гарантии</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / TECH -->
+<section id="about">
+  <div class="container">
+    <div class="tech-grid">
+      <div class="tech-img reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/119a0bbcc-690e-4aaf-a4b9-153b0b24118d.png" alt="Строительство">
+        <div class="tech-badge">
+          <div class="tech-badge-num">SIP</div>
+          <div class="tech-badge-text">Structural Insulated Panel</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="section-label">О технологии</span>
+        <h2>Каркасно-панельное строительство — будущее малоэтажной архитектуры</h2>
+        <p style="color: var(--text-muted); margin-top: 20px;">
+          Мы используем передовую канадскую технологию SIP-панелей. Каждый дом собирается на нашем производстве с точностью до миллиметра, а на участке монтируется как конструктор — быстро, чисто и без сезонных ограничений.
+        </p>
+        <ul class="tech-list">
+          <li>
+            <div>
+              <strong>Заводская точность</strong>
+              <span>Панели изготавливаются на ЧПУ-станках с допуском ±1 мм</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Энергоэффективность A+</strong>
+              <span>Теплопотери в 4 раза ниже, чем у кирпичного дома</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Экологичные материалы</strong>
+              <span>Сертифицированная древесина и безопасные утеплители</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Сейсмоустойчивость</strong>
+              <span>Каркас выдерживает нагрузки до 9 баллов</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section id="advantages" class="advantages">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Преимущества</span>
+      <h2>Почему выбирают каркасно-панельные дома</h2>
+      <p>Сочетание скорости строительства, энергоэффективности и архитектурной свободы</p>
+    </div>
+
+    <div class="adv-grid">
+      <div class="adv-card reveal">
+        <div class="adv-icon"></div>
+        <h3>Скорость</h3>
+        <p>Возведение коробки дома площадью 150 м² занимает всего 14–21 день. Полный цикл строительства — от 3 месяцев.</p>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">️</div>
+        <h3>Тепло</h3>
+        <p>SIP-панели толщиной 224 мм заменяют 1,5 метра кирпичной кладки по теплоизоляционным свойствам.</p>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">💰</div>
+        <h3>Экономия</h3>
+        <p>Стоимость строительства на 30–40% ниже, чем у каменных домов аналогичной площади и качества.</p>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon"></div>
+        <h3>Экология</h3>
+        <p>Натуральные материалы, минимальный углеродный след при производстве, перерабатываемые компоненты.</p>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">🏗️</div>
+        <h3>Любой сезон</h3>
+        <p>Строительство возможно круглый год. Мокрые процессы сведены к минимуму — только фундамент.</p>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">📐</div>
+        <h3>Свобода формы</h3>
+        <p>Реализуем проекты любой сложности: панорамное остекление, вторые света, сложные кровли.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Проекты</span>
+      <h2>Реализованные объекты</h2>
+      <p>Каждый дом — это уникальная история, рассказанная языком архитектуры</p>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/148844efe-f99a-48a7-9d87-e6d76bb0a228.png" alt="Проект Forest">
+        <div class="project-overlay">
+          <div class="project-tag">Флагманский проект</div>
+          <div class="project-title">Forest House</div>
+          <div class="project-meta">240 м² · 2 этажа · панорамное остекление</div>
+        </div>
+      </div>
+      <div class="project reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/1e0ebca63-14ed-409b-a1e4-533942a6c668.png" alt="Интерьер">
+        <div class="project-overlay">
+          <div class="project-tag">Интерьер</div>
+          <div class="project-title">Scandi Living</div>
+          <div class="project-meta">Светлое пространство · натуральные материалы</div>
+        </div>
+      </div>
+      <div class="project reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/119a0bbcc-690e-4aaf-a4b9-153b0b24118d.png" alt="Строительство">
+        <div class="project-overlay">
+          <div class="project-tag">Процесс</div>
+          <div class="project-title">Монтаж SIP-панелей</div>
+          <div class="project-meta">Заводская точность · скорость сборки</div>
+        </div>
+      </div>
+      <div class="project reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/148844efe-f99a-48a7-9d87-e6d76bb0a228.png" alt="Проект">
+        <div class="project-overlay">
+          <div class="project-tag">Загородный</div>
+          <div class="project-title">Lake View</div>
+          <div class="project-meta">180 м² · одноэтажный · терраса</div>
+        </div>
+      </div>
+      <div class="project reveal">
+        <img src="https://image.qwenlm.ai/public_source/cd31a8c1-d9a6-40af-b7c8-02f192da7be4/1e0ebca63-14ed-409b-a1e4-533942a6c668.png" alt="Проект">
+        <div class="project-overlay">
+          <div class="project-tag">Минимализм</div>
+          <div class="project-title">Mono House</div>
+          <div class="project-meta">120 м² · студия · плоская кровля</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps" class="steps">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Процесс</span>
+      <h2>Как мы строим ваш дом</h2>
+      <p>Прозрачный процесс с фиксированными сроками и стоимостью на каждом этапе</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>Проектирование</h3>
+        <p>Разрабатываем индивидуальный проект или адаптируем типовой. 3D-визуализация и рабочая документация.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3>Производство</h3>
+        <p>Изготавливаем SIP-панели и каркас на собственном заводе с ЧПУ-оборудованием. Контроль качества на каждом этапе.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3>Монтаж</h3>
+        <p>Профессиональная бригада собирает дом на вашем участке. Фундамент, каркас, кровля, инженерия.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <h3>Сдача объекта</h3>
+        <p>Финальная отделка, проверка всех систем, подписание акта. Вы получаете дом под ключ с гарантией 25 лет.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <span class="section-label">Контакты</span>
+        <h2>Начнём строить ваш дом</h2>
+        <p>Оставьте заявку — архитектор свяжется с вами в течение часа, обсудит проект и подготовит предварительный расчёт.</p>
+
+        <ul class="contact-methods">
+          <li>
+            <div class="contact-icon">📞</div>
+            <div>
+              <strong>Телефон</strong>
+              <span>+7 (800) 555-35-35</span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">✉️</div>
+            <div>
+              <strong>Email</strong>
+              <span>hello@framehouse.ru</span>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">📍</div>
+            <div>
+              <strong>Шоурум</strong>
+              <span>Москва, ул. Архитекторов, 12</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <form class="form reveal" onsubmit="handleSubmit(event)">
+        <h3>Заявка на проект</h3>
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" required placeholder="Александр">
+        </div>
+        <div class="form-group">
+          <label>Телефон</label>
+          <input type="tel" required placeholder="+7 (___) ___-__-__">
+        </div>
+        <div class="form-group">
+          <label>Площадь дома</label>
+          <select>
+            <option>до 100 м²</option>
+            <option>100–150 м²</option>
+            <option>150–200 м²</option>
+            <option>более 200 м²</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Комментарий</label>
+          <textarea placeholder="Расскажите о вашем проекте..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Отправить заявку</button>
+        <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-dot"></span>FrameHouse</div>
+      <p>Каркасно-панельные дома премиум-класса. Проектируем, производим, строим. С 2014 года.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Компания</h4>
+      <ul>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#projects">Проекты</a></li>
+        <li><a href="#">Производство</a></li>
+        <li><a href="#">Вакансии</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li><a href="#">Проектирование</a></li>
+        <li><a href="#">Строительство</a></li>
+        <li><a href="#">Отделка</a></li>
+        <li><a href="#">Инженерия</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Соцсети</h4>
+      <ul>
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">VK</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 FrameHouse. Все права защищены.</div>
+    <div>Политика конфиденциальности</div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    const original = btn.textContent;
+    btn.textContent = '✓ Заявка отправлена';
+    btn.style.background = '#4a7c59';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  // Header scroll effect
+  let lastScroll = 0;
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    const current = window.pageYOffset;
+    if (current > 100) {
+      header.style.background = 'rgba(15, 15, 14, 0.92)';
+    } else {
+      header.style.background = 'rgba(15, 15, 14, 0.7)';
+    }
+    lastScroll = current;
+  });
+
+  // Burger (simple toggle for mobile)
+  const burger = document.querySelector('.burger');
+  const nav = document.querySelector('nav ul');
+  burger.addEventListener('click', () => {
+    if (nav.style.display === 'flex') {
+      nav.style.display = 'none';
+    } else {
+      nav.style.display = 'flex';
+      nav.style.position = 'absolute';
+      nav.style.top = '70px';
+      nav.style.left = '0';
+      nav.style.right = '0';
+      nav.style.flexDirection = 'column';
+      nav.style.background = 'rgba(15,15,14,0.98)';
+      nav.style.padding = '24px';
+      nav.style.backdropFilter = 'blur(20px)';
+      nav.style.borderBottom = '1px solid var(--border)';
+    }
+  });
+</script>
+
+</body>
+</html>
